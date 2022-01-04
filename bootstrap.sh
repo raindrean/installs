@@ -34,7 +34,7 @@ if [[ -z $CONFIG_ROOT_DIR ]]; then
 fi
 
 if [ ! -d "$CONFIG_ROOT_DIR/ztools" ]; then
-	git clone https://github.com/raindrean/ztools.git $CONFIG_ROOT_DIR/ztools
+	git clone git@github.com:raindrean/ztools.git $CONFIG_ROOT_DIR/ztools
 else
 	CUR=$(pwd)
 	cd "$CONFIG_ROOT_DIR/ztools"
