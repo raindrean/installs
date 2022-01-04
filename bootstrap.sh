@@ -1,25 +1,37 @@
 echo "This is the bootstrap script"
 
+if [ ! -n "$ZSH_VERSION" ]&& [ ! -n "$BASH_VERSION" ]; then
+	echo "not zsh or bash, exit"
+	exit 0
+fi
+
 touch ~/.zshrc
 
 source ~/.zshrc
+
+if [[ -z $CONST_EDITOR ]]; then
+	if [ -n "$ZSH_VERSION" ]; then
+		read 'const_editor?input config root dir: '
+	else
+		read -p 'input config root dir: ' const_editor
+	fi
+	echo "CONST_EDITOR=$const_editor" >> ~/.zshrc
+	CONST_EDITOR="$const_editor"
+fi
 
 # 如果CONFIG_ROOT_DIR变量不存在，则通过用户输入来设置
 if [[ -z $CONFIG_ROOT_DIR ]]; then
 	if [ -n "$ZSH_VERSION" ]; then
 		read 'config_root?input config root dir: '
-	elif [ -n "$BASH_VERSION" ]; then
-		read -p 'input config root dir: ' config_root
 	else
-		echo "not zsh or bash, exit"
-		exit 0
+		read -p 'input config root dir: ' config_root
 	fi
 	config_root="${config_root/#\~/$HOME}"
 	# 如果输入的文件夹不存在，则询问是否创建
 	if [ ! -d "$config_root" ]; then
 		if [ -n "$ZSH_VERSION" ]; then
 			read 'to_create_folder_or_not?dir not exit, created? y/n: '
-		elif [ -n "$BASH_VERSION" ]; then
+		else
 			read -p 'dir not exit, created? y/n: ' to_create_folder_or_not
 		fi
 		if [[ $to_create_folder_or_not == "y" ]] || [[ $to_create_folder_or_not == "Y" ]]; then
