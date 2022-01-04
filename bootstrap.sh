@@ -2,7 +2,7 @@ echo "This is the bootstrap script"
 
 touch ~/.zshrc
 
-source ~/.zshrc
+# source ~/.zshrc
 
 # 如果CONFIG_ROOT_DIR变量不存在，则通过用户输入来设置
 if [[ -z $CONFIG_ROOT_DIR ]]; then
