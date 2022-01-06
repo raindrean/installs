@@ -5,11 +5,11 @@ if [ ! -n "$ZSH_VERSION" ] && [ ! -n "$BASH_VERSION" ]; then
 	exit 0
 fi
 
-SHELL_PROFILE=~/.zshrc
-SHELL_VAR_FILE=~/.local/SHELL_VARS.sh
+SHELL_PROFILE=$HOME/.zshrc
+SHELL_VAR_FILE=$HOME/.local/SHELL_VARS.sh
 
 if [ -n "$BASH_VERSION" ]; then
-	SHELL_PROFILE=$BASH_PROFILE
+	SHELL_PROFILE=$HOME/.bash_profile
 fi
 touch $SHELL_PROFILE
 
@@ -63,7 +63,7 @@ else
 	cd "$CONFIG_ROOT_DIR/ztools"
 	git pull
 fi
-
 # TODO: 如果zshrc里面已有这句话，则不写入
 echo "source $SHELL_VAR_FILE" >> $SHELL_PROFILE
 echo "source $CONFIG_ROOT_DIR/ztools/init.sh" >> $SHELL_PROFILE
+
