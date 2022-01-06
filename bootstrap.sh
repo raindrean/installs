@@ -1,21 +1,32 @@
 echo "This is the bootstrap script"
 
-if [ ! -n "$ZSH_VERSION" ]&& [ ! -n "$BASH_VERSION" ]; then
+if [ ! -n "$ZSH_VERSION" ] && [ ! -n "$BASH_VERSION" ]; then
 	echo "not zsh or bash, exit"
 	exit 0
 fi
 
-touch ~/.zshrc
+SHELL_PROFILE=~/.zshrc
+SHELL_VAR_FILE=~/.local/SHELL_VARS.sh
 
-source ~/.zshrc
+if [ -n "$BASH_VERSION" ]; then
+	SHELL_PROFILE=$BASH_PROFILE
+fi
+touch $SHELL_PROFILE
+
+if [ ! -d ~/.local ]; then
+	mkdir -p ~/.local
+fi
+
+touch $SHELL_VAR_FILE
+source $SHELL_VAR_FILE
 
 if [[ -z $CONST_EDITOR ]]; then
 	if [ -n "$ZSH_VERSION" ]; then
-		read 'const_editor?input config root dir: '
+		read 'const_editor?input const editor: '
 	else
-		read -p 'input config root dir: ' const_editor
+		read -p 'input const editor: ' const_editor
 	fi
-	echo "CONST_EDITOR=$const_editor" >> ~/.zshrc
+	echo "CONST_EDITOR=$const_editor" >> $SHELL_VAR_FILE
 	CONST_EDITOR="$const_editor"
 fi
 
@@ -41,7 +52,7 @@ if [[ -z $CONFIG_ROOT_DIR ]]; then
 			exit 0
 		fi
 	fi
-	echo "CONFIG_ROOT_DIR=$config_root" >> ~/.zshrc
+	echo "CONFIG_ROOT_DIR=$config_root" >> $SHELL_VAR_FILE
 	CONFIG_ROOT_DIR=$config_root
 fi
 
@@ -54,6 +65,5 @@ else
 fi
 
 # TODO: 如果zshrc里面已有这句话，则不写入
-echo "source $CONFIG_ROOT_DIR/ztools/init.sh" >> ~/.zshrc
-
-source ~/.zshrc
+echo "source $SHELL_VAR_FILE" >> $SHELL_PROFILE
+echo "source $CONFIG_ROOT_DIR/ztools/init.sh" >> $SHELL_PROFILE
