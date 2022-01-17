@@ -97,7 +97,6 @@ else
 
 	# copy variable names to
 	if [[ $willCopySHELL_VARS_template == "1" ]]; then
-    echo "CONFIG_ROOT_DIR=$config_root" >> $SHELL_VAR_FILE
     cat SHELL_VARS_template.sh >>$SHELL_VAR_FILE
     echo "" >> $SHELL_VAR_FILE
   fi
