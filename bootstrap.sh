@@ -101,6 +101,8 @@ else
     echo "" >> $SHELL_VAR_FILE
   fi
 fi
+
+# TODO: add _INIT_SH_LOADED= 在shell文件的第一行
 # TODO: 如果zshrc里面已有这句话，则不写入
 echo "source $SHELL_VAR_FILE" >> $SHELL_PROFILE
 echo "source $CONFIG_ROOT_DIR/ztools/init.sh" >> $SHELL_PROFILE
